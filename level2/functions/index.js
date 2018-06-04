@@ -48,10 +48,27 @@ exports.dialogflowFirebaseFulfillment = functions.https.onRequest(app);
 
 // Handle the Dialogflow intent named 'Default Welcome Intent'.
 app.intent('Default Welcome Intent', (conv) => {
-  conv.ask( 'Hi! GTD Project Clarification Helper is here!');
-  conv.ask( `What's problem do you want to solve? `+
-   `What is your purpose in connection to the problem?`);
+  conv.tell( 'Hi! GTD Project Clarification Helper is here!');
+  conv.ask('Should we start?');
 });
+
+app.intent('brainstormcatch - no', (conv, {$moreidea}, {problemandpurpose},
+ {priciple}, {moreprinciple}, {desiredoutcome}, {$brainstormres}) => {
+ conv.tell('Very nice, you finished the strategic phase!'+
+' Your next steps will be rule out the ideas based on the principles,'+
+' organize the path to the desired outcome using the remaining ideas,'+
+' and after begin with the first possible action,  '+
+'and always ask yourself:'+
+' What is your next action?');
+ conv.tell('This was your problem or purpose: ${problemandpurpose} .');
+ conv.tell('There were your principles or cornerstones: '+
+' ${priciple} ${moreprinciple} .');
+ conv.tell('This is your desired outcome: ${desiredoutcome}');
+ conv.tell('There were your ideas: ${brainstorm_res}, ${moreidea}');
+});
+
+// conv.ask( `What is the problem, do you want to solve? `+
+//  `What is your purpose in connection to the problem?`);
 
 // Handle the Dialogflow intent named 'actions_intent_PERMISSION'. If user
 // agreed to PERMISSION prompt, then boolean value 'permissionGranted' is true.
